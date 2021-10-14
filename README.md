@@ -41,7 +41,7 @@ Our model achieves the following Log-Likelihood score on different datasets:
 
 ## Contributing
 
-If you would like to contribute to the project please reach out to us via email. If you found this library useful in your research, please consider citing.
+If you would like to contribute to the project please reach out to [Lenart Treven](mailto:trevenl@ethz.ch?subject=[DGM]%20Contribution%20to%20DGM) or [Philippe Wenk](mailto:wenkph@ethz.ch?subject=[DGM]%20Contribution%20to%20DGM). If you found this library useful in your research, please consider citing.
 ```
 @article{treven2021distributional,
   title={Distributional Gradient Matching for Learning Uncertain Neural Dynamics Models},
