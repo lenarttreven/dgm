@@ -1,5 +1,10 @@
 # Distributional Gradient Matching for Learning Uncertain Neural Dynamics Models
 
+[**Requirements**](#requirements)
+| [**Training**](#training)
+| [**Results**](#results)
+| [**Contributing**](#contributing)
+
 This repository is the official implementation of [Distributional Gradient Matching for Learning Uncertain Neural Dynamics Models](https://arxiv.org/abs/2106.11609). 
 
 <p align="center">
