@@ -58,7 +58,7 @@ if __name__ == '__main__':
     run_dict = {
         'seed': seed,
         'data_generation': {
-            'type': SimulatorType.LORENZ,
+            'type': SimulatorType.QUADROCOPTER,
             'parameters': my_simulator_parameters,
             'noise': my_stds_for_simulation,
             'times': my_times,

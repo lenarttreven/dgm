@@ -37,7 +37,7 @@ if __name__ == '__main__':
     my_initial_conditions = [out[:, i, j] for i in range(num_x_points) for j in range(num_y_points)]
     my_initial_conditions = [jnp.concatenate([ic, jnp.array([0, 0])]) for ic in my_initial_conditions]
 
-    my_stds_for_simulation = [jnp.array([0.1, 0.1], dtype=jnp.float32) for _ in range(num_trajectories)]
+    my_stds_for_simulation = [jnp.array([0.1, 0.1, 0.1, 0.1], dtype=jnp.float32) for _ in range(num_trajectories)]
 
     my_simulator_parameters = {"g": 9.81, "m": 1, "l": 1}
 
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     run_dict = {
         'seed': seed,
         'data_generation': {
-            'type': SimulatorType.LORENZ,
+            'type': SimulatorType.DOUBLE_PENDULUM,
             'parameters': my_simulator_parameters,
             'noise': my_stds_for_simulation,
             'times': my_times,

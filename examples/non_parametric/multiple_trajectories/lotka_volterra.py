@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     my_stds_for_simulation = [jnp.array([0.1, 0.1], dtype=jnp.float32) for _ in range(num_trajectories)]
 
-    my_simulator_parameters = {"a": 1, "b": 1, "c": 1, "d": 1}
+    my_simulator_parameters = {'params': jnp.array([1, 1, 1, 1])}
 
     track_wandb = True
     track_just_loss = True
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     run_dict = {
         'seed': seed,
         'data_generation': {
-            'type': SimulatorType.LORENZ,
+            'type': SimulatorType.LOTKA_VOLTERRA,
             'parameters': my_simulator_parameters,
             'noise': my_stds_for_simulation,
             'times': my_times,
