@@ -2,9 +2,18 @@ from enum import Enum, auto
 from typing import Callable, Any
 
 import jax.numpy as jnp
-from jax.experimental.optimizers import constant, piecewise_constant, polynomial_decay
+from jax.experimental.optimizers import constant, piecewise_constant
 
 BetaSchedule = Callable[[int], jnp.array]
+
+
+def polynomial_decay(step_size, decay_steps, final_step_size, power):
+    def schedule(step_num):
+        step_num = jnp.minimum(step_num, decay_steps)
+        step_mult = jnp.maximum(1 - step_num / decay_steps, 0) ** power
+        return step_mult * (step_size - final_step_size) + final_step_size
+
+    return schedule
 
 
 class BetasType(Enum):

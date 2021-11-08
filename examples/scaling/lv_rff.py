@@ -1,7 +1,8 @@
 import argparse
 import time
 from typing import Callable
-
+import os
+os.environ['JAX_ENABLE_X64'] = 'True'
 import jax
 import jax.numpy as jnp
 import wandb
@@ -18,7 +19,7 @@ Schedule = Callable[[int], float]
 
 if __name__ == '__main__':
     my_parser = argparse.ArgumentParser()
-    my_parser.add_argument('--n_points_per_dimension', action='store', type=int, default=10)
+    my_parser.add_argument('--n_points_per_dimension', action='store', type=int, default=1)
     args = my_parser.parse_args()
 
     kernel_seed = 135
@@ -28,8 +29,8 @@ if __name__ == '__main__':
     lr = 0.1
     seed = 0
 
-    num_points_on_trajectory = 5
-    num_der_points = 30
+    num_points_on_trajectory = 100
+    num_der_points = 100
     n_points_per_dimension = args.n_points_per_dimension
 
     num_x_points = n_points_per_dimension
@@ -164,7 +165,8 @@ if __name__ == '__main__':
         config = wandb.config
 
     model = LearnSystem(**run_dict)
-    model.train(20)
+    model.train(num_iterations)
+    model.plot_trajectories_at_times()
 
     start_time = time.time()
 

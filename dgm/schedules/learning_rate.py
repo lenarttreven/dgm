@@ -1,7 +1,8 @@
 from enum import Enum, auto
 from typing import Callable
 
-from jax.experimental.optimizers import constant, piecewise_constant, polynomial_decay
+from jax.experimental.optimizers import constant, piecewise_constant
+from dgm.schedules.betas import polynomial_decay
 
 Schedule = Callable[[int], float]
 

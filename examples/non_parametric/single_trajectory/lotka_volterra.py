@@ -1,6 +1,9 @@
 from typing import Callable
+import os
+os.environ['JAX_ENABLE_X64'] = 'True'
 
 import jax.numpy as jnp
+import jax
 
 import wandb
 from dgm.main.learn_system import LearnSystem
@@ -21,11 +24,14 @@ if __name__ == '__main__':
     num_der_points = 100
     num_trajectories = 1
 
-    my_times = [jnp.linspace(0, 10, num_points_on_trajectory, dtype=jnp.float32) for _ in range(num_trajectories)]
-    my_test_times = [jnp.linspace(0, 10, 200, dtype=jnp.float32) for _ in range(num_trajectories)]
+    kernel_seed = 135
+    kernel_rng = jax.random.PRNGKey(kernel_seed)
 
-    my_initial_conditions = [jnp.array([1, 2], dtype=jnp.float32)]
-    my_stds_for_simulation = [jnp.array([0.1, 0.1], dtype=jnp.float32) for _ in range(num_trajectories)]
+    my_times = [jnp.linspace(0, 10, num_points_on_trajectory, dtype=jnp.float64) for _ in range(num_trajectories)]
+    my_test_times = [jnp.linspace(0, 10, 200, dtype=jnp.float64) for _ in range(num_trajectories)]
+
+    my_initial_conditions = [jnp.array([1, 2], dtype=jnp.float64)]
+    my_stds_for_simulation = [jnp.array([0.1, 0.1], dtype=jnp.float64) for _ in range(num_trajectories)]
 
     my_simulator_parameters = {"params": jnp.array([1, 1, 1, 1])}
 
@@ -35,8 +41,8 @@ if __name__ == '__main__':
     numerical_correction = 1e-3
 
     final_beta = 1
-    transition_len = 1000
-    boundary = 1000
+    transition_len = 1200
+    boundary = 1500
 
     num_iterations = boundary + 1000
 
@@ -52,8 +58,12 @@ if __name__ == '__main__':
         },
         'smoother': {
             'kernel': {
-                'type': KernelType.RBF_NO_LENGTHSCALES_NO_VARIANCE,
-                'kwargs': {}
+                'type': KernelType.RBF_RFF,
+                'kwargs': {
+                    'feature_rng': kernel_rng,
+                    'n_rff': 40,
+                    'n_features': 1,  # depends on the feature extractor chosen
+                },
             },
             'core': {
                 'type': TimeAndStatesToFeaturesType.IDENTITY,
